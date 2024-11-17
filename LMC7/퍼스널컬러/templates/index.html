@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼스널 컬러 자가 진단</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* 화면 상단에 정렬 */
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        #description {
+            font-family: 'Roboto', sans-serif;
+            color: #d9534f; /* 연한 빨강색 */
+            width: 80%;
+            margin-bottom: 20px;
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+        .note {
+            display: block; /* 각 참고사항을 블록 요소로 만듭니다. */
+            margin-bottom: 5px; /* 각 참고사항 사이에 간격을 추가합니다. */
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 450px; /* 가로 세로 1.5배 */
+            height: 450px; /* 가로 세로 1.5배 */
+            box-sizing: border-box; /* padding과 border를 포함하여 크기를 계산 */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        #preview {
+            width: 80%; /* 네모난 칸의 크기 조정 */
+            height: 80%;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-size: cover;
+            background-position: center;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(100% - 24px); /* padding과 border를 고려하여 너비를 조정 */
+            box-sizing: border-box; /* padding과 border를 포함하여 크기를 계산 */
+        }
+        input[type="submit"] {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 80%;
+            margin-bottom: 20px; /* 버튼과 아래쪽 경계 사이의 간격을 추가 */
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+    <!-- Google Fonts 추가 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+    <h1>사진을 선택해주세요</h1>
+    <div id="description">
+        <span class="note">참고 사항: 조명이 과하거나 너무 어두운 사진을 업로드 하시면 정확한 진단이 어려울 수 있습니다.</span>
+        <span class="note">참고 사항: 얼굴 비율이 적은 사진을 업로드 하시면 정확한 진단이 어려울 수 있습니다.</span>
+    </div>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div id="preview"></div> <!-- 이미지 미리보기 영역 -->
+        <input type="file" name="file" id="fileInput" accept="image/*">
+        <input type="submit" value="업로드">
+    </form>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.style.backgroundImage = 'url(' + e.target.result + ')';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
